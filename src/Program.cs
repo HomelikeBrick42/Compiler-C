@@ -10,6 +10,7 @@ namespace Compiler
 			{
 				Console.Write("> ");
 				string text = Console.ReadLine();
+				Console.WriteLine();
 
 				if (text == "#exit")
 				{
@@ -27,11 +28,12 @@ namespace Compiler
 					Token token = lexer.NextToken();
 					if (token.Kind != TokenKind.SingleLineComment &&
 						token.Kind != TokenKind.MultilineComment &&
-						token.Kind != TokenKind.Whitespace)
+						token.Kind != TokenKind.Whitespace &&
+						token.Kind != TokenKind.Bad)
 					{
 						Console.WriteLine($"<{token.Kind}> = '{token.Text}'");
 					}
-					if (token.Kind == TokenKind.EndOfFile)
+					if (token.Kind == TokenKind.EndOfFile || token.Kind == TokenKind.Bad)
 						break;
 				}
 			}

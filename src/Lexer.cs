@@ -202,7 +202,9 @@ namespace Compiler
 						return new Token(TokenKind.Char, m_Text.Substring(start + 1, 2), start);
 					}
 
-					return new Token(TokenKind.Bad, m_Text.Substring(m_Position++, 1), start);
+					Token error = new Token(TokenKind.Bad, m_Text.Substring(start, 2), start);
+					Print.TokenError(m_Text, error, "[Lexer]: Invalid character literal");
+					return error;
 				}
 
 				case '"':
@@ -223,10 +225,16 @@ namespace Compiler
 						m_Position++;
 					}
 
-					if (Current != '\0')
-						m_Position++;
+					if (Current == '\0')
+					{
+						Token error = new Token(TokenKind.Bad, m_Text.Substring(start, length), start);
+						Print.TokenError(m_Text, error, "[Lexer]: Unclosed string literal");
+						return error;
+					}
 					else
-						{} // TODO: Error
+					{
+						m_Position++;
+					}
 
 					return new Token(TokenKind.String, m_Text.Substring(start + 1, length), start);
 				}
@@ -279,10 +287,16 @@ namespace Compiler
 								m_Position++;
 							}
 
-							if (depth == 0)
-								length -= 2;
+							if (depth != 0)
+							{
+								Token error = new Token(TokenKind.Bad, m_Text.Substring(start, 2), start);
+								Print.TokenError(m_Text, error, "[Lexer]: Unclosed multiline comment");
+								return error;
+							}
 							else
-								{} // TODO: Error
+							{
+								length -= 2;
+							}
 
 							return new Token(TokenKind.MultilineComment, m_Text.Substring(start + 2, length), start);
 						}
