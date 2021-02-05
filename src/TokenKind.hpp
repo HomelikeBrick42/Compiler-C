@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 enum struct TokenKind {
 	// Single char
 	EndOfFile,
@@ -60,6 +62,11 @@ enum struct TokenKind {
 	Identifier,
 	Int,
 	Float,
+
+	Count,
 };
 
-const char* TokenKindToString(TokenKind kind);
+extern const char* TokenKindNames[(uint64_t)TokenKind::Count];
+inline const char* TokenKindToString(TokenKind kind) {
+	return TokenKindNames[(uint64_t)kind];
+}

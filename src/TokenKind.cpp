@@ -1,113 +1,63 @@
 #include "TokenKind.hpp"
 
-const char* TokenKindToString(TokenKind kind) {
-	switch (kind)
-	{
-	case TokenKind::EndOfFile:
-		return "EndOfFile";
-	case TokenKind::Bad:
-		return "Bad";
-	case TokenKind::OpenParentheses:
-		return "OpenParentheses";
-	case TokenKind::CloseParentheses:
-		return "CloseParentheses";
-	case TokenKind::OpenSquareBracket:
-		return "OpenSquareBracket";
-	case TokenKind::CloseSquareBracket:
-		return "CloseSquareBracket";
-	case TokenKind::OpenBracket:
-		return "OpenBracket";
-	case TokenKind::CloseBracket:
-		return "CloseBracket";
-	case TokenKind::Semicolon:
-		return "Semicolon";
-	case TokenKind::QuestionMark:
-		return "QuestionMark";
-	case TokenKind::Comma:
-		return "Comma";
-	case TokenKind::Grave:
-		return "Grave";
-	case TokenKind::Dot:
-		return "Dot";
-	case TokenKind::Plus:
-		return "Plus";
-	case TokenKind::Minus:
-		return "Minus";
-	case TokenKind::Asterisk:
-		return "Asterisk";
-	case TokenKind::ForwardSlash:
-		return "ForwardSlash";
-	case TokenKind::Percent:
-		return "Percent";
-	case TokenKind::Caret:
-		return "Caret";
-	case TokenKind::Colon:
-		return "Colon";
-	case TokenKind::Equals:
-		return "Equals";
-	case TokenKind::ExclamationMark:
-		return "ExclamationMark";
-	case TokenKind::Ampersand:
-		return "Ampersand";
-	case TokenKind::Pipe:
-		return "Pipe";
-	case TokenKind::LessThan:
-		return "LessThan";
-	case TokenKind::GreaterThan:
-		return "GreaterThan";
-	case TokenKind::PlusEquals:
-		return "PlusEquals";
-	case TokenKind::MinusEquals:
-		return "MinusEquals";
-	case TokenKind::RightArrow:
-		return "RightArrow";
-	case TokenKind::AsteriskEquals:
-		return "AsteriskEquals";
-	case TokenKind::ForwardSlashEquals:
-		return "ForwardSlashEquals";
-	case TokenKind::PercentEquals:
-		return "PercentEquals";
-	case TokenKind::CaretEquals:
-		return "CaretEquals";
-	case TokenKind::ColonColon:
-		return "ColonColon";
-	case TokenKind::ColonEquals:
-		return "ColonEquals";
-	case TokenKind::EqualsEquals:
-		return "EqualsEquals";
-	case TokenKind::ExclamationMarkEquals:
-		return "ExclamationMarkEquals";
-	case TokenKind::AmpersandAmpersand:
-		return "AmpersandAmpersand";
-	case TokenKind::AmpersandEquals:
-		return "AmpersandEquals";
-	case TokenKind::PipePipe:
-		return "PipePipe";
-	case TokenKind::PipeEquals:
-		return "PipeEquals";
-	case TokenKind::LessThanLessThan:
-		return "LessThanLessThan";
-	case TokenKind::GreaterThanGreaterThan:
-		return "GreaterThanGreaterThan";
-	case TokenKind::LessThanEquals:
-		return "LessThanEquals";
-	case TokenKind::GreaterThanEquals:
-		return "GreaterThanEquals";
-	case TokenKind::LessThanLessThanEquals:
-		return "LessThanLessThanEquals";
-	case TokenKind::GreaterThanGreaterThanEquals:
-		return "GreaterThanGreaterThanEquals";
-	case TokenKind::Whitespace:
-		return "Whitespace";
-	case TokenKind::Comment:
-		return "Comment";
-	case TokenKind::Identifier:
-		return "Identifier";
-	case TokenKind::Int:
-		return "Int";
-	case TokenKind::Float:
-		return "Float";
-	default:
-		return "Unknown";
-	}
-}
+const char* TokenKindNames[(uint64_t)TokenKind::Count] = {
+	// Single char
+	"EndOfFile",
+	"Bad",
+	"OpenParentheses",
+	"CloseParentheses",
+	"OpenSquareBracket",
+	"CloseSquareBracket",
+	"OpenBracket",
+	"CloseBracket",
+	"Semicolon",
+	"QuestionMark",
+	"Comma",
+	"Grave",
+	"Dot",
+	"Plus",
+	"Minus",
+	"Asterisk",
+	"ForwardSlash",
+	"Percent",
+	"Caret",
+	"Colon",
+	"Equals",
+	"ExclamationMark",
+	"Ampersand",
+	"Pipe",
+	"LessThan",
+	"GreaterThan",
+	
+	// Double char
+	"PlusEquals",
+	"MinusEquals",
+	"RightArrow",
+	"AsteriskEquals",
+	"ForwardSlashEquals",
+	"PercentEquals",
+	"CaretEquals",
+	"ColonColon",
+	"ColonEquals",
+	"EqualsEquals",
+	"ExclamationMarkEquals",
+	"AmpersandAmpersand",
+	"AmpersandEquals",
+	"PipePipe",
+	"PipeEquals",
+	"LessThanLessThan",
+	"GreaterThanGreaterThan",
+	"LessThanEquals",
+	"GreaterThanEquals",
+	
+	// Triple char
+	"LessThanLessThanEquals",
+	"GreaterThanGreaterThanEquals",
+	
+	// Multichar
+	"Whitespace",
+	"Comment",
+	"Identifier",
+	"Int",
+	"Float"
+};

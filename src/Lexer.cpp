@@ -240,7 +240,7 @@ Token* Lexer::LexBinary() {
 	uint64_t start = m_Position;
 	uint64_t length = 0;
 	uint64_t value = 0;
-	assert(false);
+	assert(false); // @Incomplete: Not implemented
 	return new IntToken{ TokenKind::Int, start, length, value };
 }
 
@@ -248,7 +248,7 @@ Token* Lexer::LexHexadecimal() {
 	uint64_t start = m_Position;
 	uint64_t length = 0;
 	uint64_t value = 0;
-	assert(false);
+	assert(false); // @Incomplete: Not implemented
 	return new IntToken{ TokenKind::Int, start, length, value };
 }
 
@@ -297,7 +297,7 @@ Token* Lexer::LexMultilineComment() {
 		}
 	}
 
-	assert(depth == 0);
+	assert(depth == 0); // @Incomplete: Implement actuall error message
 
 	return new Token{ TokenKind::Comment, start, length };
 }
