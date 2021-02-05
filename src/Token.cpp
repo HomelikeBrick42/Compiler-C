@@ -5,6 +5,9 @@
 	
 void PrintToken(const char* source, Token* token) {
 	switch (token->Kind) {
+	case TokenKind::Identifier:
+		printf("Token '%s' Type: <%s>\n", static_cast<IdentifierToken*>(token)->Name, TokenKindToString(token->Kind));
+		break;
 	case TokenKind::Int:
 		printf("Token '%.*s' Type: <%s> Value: %lld\n", (int)token->Length, &source[token->Position], TokenKindToString(token->Kind), static_cast<IntToken*>(token)->Value);
 		break;

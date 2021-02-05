@@ -1,6 +1,7 @@
 #include "Lexer.hpp"
 #include "Token.hpp"
 #include "TokenKind.hpp"
+#include "StringInterner.hpp"
 
 #include <cassert>
 #include <cstring>
@@ -183,7 +184,7 @@ Token* Lexer::LexIdentifier() {
 		break;
 	}
 
-	return new Token{ TokenKind::Identifier, start, length };
+	return new IdentifierToken{ TokenKind::Identifier, start, length, InternString(&m_Source[start], length) };
 }
 
 Token* Lexer::LexNumber() {

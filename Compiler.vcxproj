@@ -88,11 +88,13 @@
   <ItemGroup>
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\StringInterner.cpp" />
     <ClCompile Include="src\Token.cpp" />
     <ClCompile Include="src\TokenKind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Lexer.hpp" />
+    <ClInclude Include="src\StringInterner.hpp" />
     <ClInclude Include="src\Token.hpp" />
     <ClInclude Include="src\TokenKind.hpp" />
   </ItemGroup>

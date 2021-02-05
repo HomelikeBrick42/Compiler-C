@@ -3,6 +3,7 @@
 #include "Lexer.hpp"
 
 #include <cstdio>
+#include <assert.h>
 
 int main(int argc, char** argv) {
 	const char* text = "_a123 :: 1.5e-1 + 2 * 3;";

@@ -10,6 +10,10 @@ struct Token {
 	uint64_t Length;
 };
 
+struct IdentifierToken : Token {
+	const char* Name;
+};
+
 struct IntToken : Token {
 	uint64_t Value;
 };
