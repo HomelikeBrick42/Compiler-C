@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-enum struct TokenKind {
+enum struct TokenKind : uint64_t {
 	// Single char
 	EndOfFile,
 	Bad,

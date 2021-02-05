@@ -3,7 +3,7 @@
 #include <cstdint>
 
 struct Token;
-enum struct TokenKind;
+enum struct TokenKind : uint64_t;
 
 class Lexer {
 public:

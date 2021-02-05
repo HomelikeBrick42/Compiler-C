@@ -3,6 +3,7 @@
 #include "Lexer.hpp"
 
 #include <cstdio>
+#include <cstdlib>
 #include <assert.h>
 
 int main(int argc, char** argv) {

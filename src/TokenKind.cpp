@@ -59,5 +59,5 @@ const char* TokenKindNames[(uint64_t)TokenKind::Count] = {
 	"Comment",
 	"Identifier",
 	"Int",
-	"Float"
+	"Float",
 };
