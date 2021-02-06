@@ -33,6 +33,9 @@
     <ClCompile Include="src\CharToNumber.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DynamicArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Token.hpp">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\StringInterner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DynamicArray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DynamicArray.cpp" />
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\CharToNumber.c" />
@@ -94,6 +95,7 @@
     <ClCompile Include="src\TokenKind.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DynamicArray.hpp" />
     <ClInclude Include="src\Lexer.hpp" />
     <ClInclude Include="src\StringInterner.hpp" />
     <ClInclude Include="src\Token.hpp" />

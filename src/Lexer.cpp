@@ -2,6 +2,7 @@
 #include "Token.hpp"
 #include "TokenKind.hpp"
 #include "StringInterner.hpp"
+#include "DynamicArray.hpp"
 
 #include <cassert>
 #include <cstring>
@@ -257,13 +258,11 @@ Token* Lexer::LexNumber() {
 	return new IntToken{ TokenKind::Int, start, length, value };
 }
 
-#include <vector> // @Temporary
-
 Token* Lexer::LexFloat() {
 	uint64_t start = m_Position;
 
 	uint64_t length = 0;
-	std::vector<char> string;
+	char* string = DynamicArrayCreate(char);
 
 	while (true) {
 		switch (m_Current) {
@@ -275,7 +274,7 @@ Token* Lexer::LexFloat() {
 		case '5': case '6': case '7': case '8': case '9':
 		case '.':
 			length++;
-			string.push_back(m_Current);
+			DynamicArrayPush(string, m_Current);
 			Advance();
 			continue;
 		default:
@@ -284,10 +283,11 @@ Token* Lexer::LexFloat() {
 		break;
 	}
 
-	string.push_back(0);
+	DynamicArrayPushLiteral(string, 0);
 
 	char* end;
-	double value = strtod(string.data(), &end);
+	double value = strtod(string, &end);
+	DynamicArrayDestroy(string);
 
 	return new FloatToken{ TokenKind::Float, start, length, value };
 }

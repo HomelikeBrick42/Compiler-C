@@ -4,7 +4,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <assert.h>
+#include <cassert>
 
 int main(int argc, char** argv) {
 	const char* text = "_a123 :: 1.5 + 0x45ff * 3 - 0b1000;";
@@ -13,8 +13,9 @@ int main(int argc, char** argv) {
 	while (true) {
 		Token* token = lexer.NextToken();
 		PrintToken(text, token);
-		if (token->Kind == TokenKind::EndOfFile)
+		if (token->Kind == TokenKind::EndOfFile) {
 			break;
+		}
 	}
 
 	(void)getchar();
