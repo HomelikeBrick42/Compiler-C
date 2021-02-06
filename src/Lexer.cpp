@@ -239,10 +239,8 @@ Token* Lexer::LexNumber() {
 		case '0': case '1': case '2': case '3': case '4':
 		case '5': case '6': case '7': case '8': case '9': {
 			uint64_t number = CharToNumber[m_Current];
-			if (number == 0) {
-				assert(m_Current == '0');
-			}
-			assert(number < base);
+			assert(number != 0 || m_Current == '0'); // @Incomplete: Implement actual error message
+			assert(number < base); // @Incomplete: Implement actual error message
 
 			value *= base;
 			value += number;
@@ -328,7 +326,7 @@ Token* Lexer::LexMultilineComment() {
 		}
 	}
 
-	assert(depth == 0); // @Incomplete: Implement actuall error message
+	assert(depth == 0); // @Incomplete: Implement actual error message
 
 	return new Token{ TokenKind::Comment, start, length };
 }
