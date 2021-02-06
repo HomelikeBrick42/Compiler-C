@@ -187,26 +187,19 @@ Token* Lexer::LexIdentifier() {
 	return new IdentifierToken{ TokenKind::Identifier, start, length, InternString(&m_Source[start], length) };
 }
 
+extern "C" uint64_t CharToNumber[256];
+
 Token* Lexer::LexNumber() {
 	uint64_t start = m_Position;
 	uint64_t length = 0;
 	uint64_t value = 0;
-
-	if (m_Current == '0') {
-		switch (Peek(1)) {
-		case 'b': case 'B':
-			return LexBinary();
-		case 'x': case 'X':
-			return LexHexadecimal();
-		default:
-			break;
-		}
-	}
+	uint64_t base = 10;
 
 	while (true) {
 		switch (Peek(length)) {
 		case '0': case '1': case '2': case '3': case '4':
 		case '5': case '6': case '7': case '8': case '9':
+		case '_':
 			length++;
 			continue;
 		case '.':
@@ -218,16 +211,45 @@ Token* Lexer::LexNumber() {
 		break;
 	}
 
-	while (true)
-	{
+	if (m_Current == '0') {
+		switch (Peek(1)) {
+		case 'b': case 'B':
+			base = 2;
+			length += 2;
+			Advance(2);
+			break;
+		case 'x': case 'X':
+			base = 16;
+			length += 2;
+			Advance(2);
+			break;
+		default:
+			base = 8;
+			break;
+		}
+	}
+
+	while (true) {
 		switch (m_Current) {
-		case '0': case '1': case '2': case '3': case '4':
-		case '5': case '6': case '7': case '8': case '9':
-			length++;
-			value *= 10;
-			value += static_cast<uint64_t>(m_Current - '0');
+		case '_':
 			Advance();
 			continue;
+		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+		case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+		case '0': case '1': case '2': case '3': case '4':
+		case '5': case '6': case '7': case '8': case '9': {
+			uint64_t number = CharToNumber[m_Current];
+			if (number == 0) {
+				assert(m_Current == '0');
+			}
+			assert(number < base);
+
+			value *= base;
+			value += number;
+
+			length++;
+			Advance();
+		} continue;
 		default:
 			break;
 		}
@@ -237,29 +259,37 @@ Token* Lexer::LexNumber() {
 	return new IntToken{ TokenKind::Int, start, length, value };
 }
 
-Token* Lexer::LexBinary() {
-	uint64_t start = m_Position;
-	uint64_t length = 0;
-	uint64_t value = 0;
-	assert(false); // @Incomplete: Not implemented
-	return new IntToken{ TokenKind::Int, start, length, value };
-}
-
-Token* Lexer::LexHexadecimal() {
-	uint64_t start = m_Position;
-	uint64_t length = 0;
-	uint64_t value = 0;
-	assert(false); // @Incomplete: Not implemented
-	return new IntToken{ TokenKind::Int, start, length, value };
-}
+#include <vector> // @Temporary
 
 Token* Lexer::LexFloat() {
 	uint64_t start = m_Position;
 
+	uint64_t length = 0;
+	std::vector<char> string;
+
+	while (true) {
+		switch (m_Current) {
+		case '_':
+			length++;
+			Advance();
+			continue;
+		case '0': case '1': case '2': case '3': case '4':
+		case '5': case '6': case '7': case '8': case '9':
+		case '.':
+			length++;
+			string.push_back(m_Current);
+			Advance();
+			continue;
+		default:
+			break;
+		}
+		break;
+	}
+
+	string.push_back(0);
+
 	char* end;
-	double value = strtod(&m_Source[start], &end);
-	uint64_t length = (uint64_t)(end - &m_Source[start]);
-	Advance(length);
+	double value = strtod(string.data(), &end);
 
 	return new FloatToken{ TokenKind::Float, start, length, value };
 }

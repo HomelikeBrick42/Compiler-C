@@ -7,7 +7,7 @@
 #include <assert.h>
 
 int main(int argc, char** argv) {
-	const char* text = "_a123 :: 1.5e-1 + 2 * 3;";
+	const char* text = "_a123 :: 1.5 + 0x45ff * 3 - 0b1000;";
 	Lexer lexer(text);
 
 	while (true) {

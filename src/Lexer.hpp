@@ -16,8 +16,6 @@ private:
 	Token* LexWhitespace();
 	Token* LexIdentifier();
 	Token* LexNumber();
-	Token* LexBinary();
-	Token* LexHexadecimal();
 	Token* LexFloat();
 	Token* LexSingleLineComment();
 	Token* LexMultilineComment();
