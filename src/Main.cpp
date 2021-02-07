@@ -8,10 +8,12 @@
 
 int main(int argc, char** argv) {
 	const char* text =
-		"_var123 :: (1.5 + -0x45ff * 3 - 0b1000 ^ 5 | 0x00ff) / 5 << 2;\n"
+		"_var123 := 1 + 2 * 3;\n"
 		"a :: 10;\n"
 		"b :: 20;\n"
-		"c :: a + b;\n";
+		"c := a + b;\n"
+		"c = a * b + c;\n"
+		"c *= a;\n";
 /*
 	Lexer lexer(text);
 

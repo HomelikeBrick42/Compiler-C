@@ -11,9 +11,9 @@
 void PrintNode(Node* node, const char* indent, bool isLast) {
 	const char* marker = isLast ? "\xC0\xC4\xC4" : "\xC3\xC4\xC4";
 
-    printf(indent);
-    printf(marker);
+    printf("%s%s", indent, marker);
     printf("%s", NodeKindToString(node->Kind));
+
     Token* token = nullptr;
     switch (node->Kind) {
     case NodeKind::Identifier:
@@ -169,6 +169,9 @@ void PrintNode(Node* node, const char* indent, bool isLast) {
         break;
     case NodeKind::ConstantDefinition:
         PrintNode(static_cast<ConstantDefinitionNode*>(node)->Value, newIndent, true);
+        break;
+    case NodeKind::DefinitionAssignment:
+        PrintNode(static_cast<DefinitionAssignmentNode*>(node)->Value, newIndent, true);
         break;
     case NodeKind::Assignment:
         PrintNode(static_cast<AssignmentNode*>(node)->Value, newIndent, true);

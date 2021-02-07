@@ -131,7 +131,7 @@ Node* Parser::ParsePrimaryExpression() {
 	}
 	case TokenKind::OpenParentheses: {
 		assert(EatToken(TokenKind::OpenParentheses));
-		Node* expression = ParseBinaryExpression();
+		Node* expression = ParseExpression();
 		assert(EatToken(TokenKind::CloseParentheses));
 		return expression;
 	}
@@ -168,10 +168,33 @@ Node* Parser::ParseBinaryExpression(uint64_t parentPresedence) {
 Node* Parser::ParseStatement() {
 	assert(m_Current->Kind == TokenKind::Identifier);
 	Token* name = NextToken();
+
+	Token* operatorToken = m_Current;
+
 	if (EatToken(TokenKind::ColonColon)) {
 		Node* value = ParseExpression();
 		assert(EatToken(TokenKind::Semicolon));
 		return new ConstantDefinitionNode{ NodeKind::ConstantDefinition, name, nullptr, value };
+	} else if (EatToken(TokenKind::ColonEquals)) {
+		Node* value = ParseExpression();
+		assert(EatToken(TokenKind::Semicolon));
+		return new DefinitionAssignmentNode{ NodeKind::DefinitionAssignment, name, nullptr, value };
+	} else if (
+		EatToken(TokenKind::Equals) ||
+		EatToken(TokenKind::PlusEquals) ||
+		EatToken(TokenKind::MinusEquals) ||
+		EatToken(TokenKind::AsteriskEquals) ||
+		EatToken(TokenKind::ForwardSlashEquals) ||
+		EatToken(TokenKind::PercentEquals) ||
+		EatToken(TokenKind::LessThanLessThanEquals) ||
+		EatToken(TokenKind::GreaterThanGreaterThanEquals) ||
+		EatToken(TokenKind::AmpersandEquals) ||
+		EatToken(TokenKind::PipeEquals) ||
+		EatToken(TokenKind::CaretEquals)
+	) {
+		Node* value = ParseExpression();
+		assert(EatToken(TokenKind::Semicolon));
+		return new AssignmentNode{ NodeKind::Assignment, name, operatorToken, value };
 	}
 
 	assert(false);
