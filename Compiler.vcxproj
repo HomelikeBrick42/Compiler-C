@@ -57,7 +57,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)src;</AdditionalIncludeDirectories>
@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)src;</AdditionalIncludeDirectories>
@@ -90,6 +90,9 @@
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\CharToNumber.c" />
+    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\NodeKind.cpp" />
+    <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\StringInterner.cpp" />
     <ClCompile Include="src\Token.cpp" />
     <ClCompile Include="src\TokenKind.cpp" />
@@ -97,6 +100,9 @@
   <ItemGroup>
     <ClInclude Include="src\DynamicArray.hpp" />
     <ClInclude Include="src\Lexer.hpp" />
+    <ClInclude Include="src\Node.hpp" />
+    <ClInclude Include="src\NodeKind.hpp" />
+    <ClInclude Include="src\Parser.hpp" />
     <ClInclude Include="src\StringInterner.hpp" />
     <ClInclude Include="src\Token.hpp" />
     <ClInclude Include="src\TokenKind.hpp" />

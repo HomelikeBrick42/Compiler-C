@@ -9,7 +9,8 @@
 #include <cstdlib>
 
 Lexer::Lexer(const char* source)
-	: m_Source(source), m_SourceLength(strlen(m_Source)), m_Position(0), m_Current(m_Source[m_Position]) {}
+	: m_Source(source), m_SourceLength(strlen(m_Source)), m_Position(0), m_Current(m_Source[m_Position]) {
+}
 
 #define LEX_MULTI_1(c1, k1, c2, k2) \
 	case c1: { \
@@ -50,8 +51,7 @@ Token* Lexer::NextToken() {
 		case '5': case '6': case '7': case '8': case '9':
 			return LexNumber();
 
-		case '<':
-		{
+		case '<': {
 			if (Peek(1) == '<') {
 				if (Peek(2) == '=') {
 					return ReturnNext(TokenKind::LessThanLessThanEquals, 3);
@@ -63,8 +63,7 @@ Token* Lexer::NextToken() {
 			return ReturnNext(TokenKind::LessThan, 1);
 		} break;
 
-		case '>':
-		{
+		case '>': {
 			if (Peek(1) == '>') {
 				if (Peek(2) == '=') {
 					return ReturnNext(TokenKind::GreaterThanGreaterThanEquals, 3);
@@ -240,8 +239,10 @@ Token* Lexer::LexNumber() {
 		case '0': case '1': case '2': case '3': case '4':
 		case '5': case '6': case '7': case '8': case '9': {
 			uint64_t number = CharToNumber[m_Current];
-			assert(number != 0 || m_Current == '0'); // @Incomplete: Implement actual error message
-			assert(number < base); // @Incomplete: Implement actual error message
+			assert(
+				number < base && // char not out of range
+				(number != 0 || m_Current == '0') // invalid index
+			); // @Incomplete: Implement actual error message
 
 			value *= base;
 			value += number;

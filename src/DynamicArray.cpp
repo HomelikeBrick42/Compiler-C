@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 #include <cstdio>
-#include <memory.h>
+#include <cstring>
 
 void* _DynamicArrayCreate(uint64_t length, uint64_t stride) {
 	uint64_t headerSize = DYNAMIC_ARRAY_FIELD_LENGTH * sizeof(uint64_t);
