@@ -16,9 +16,12 @@ private:
 	Token* NextToken();
 	bool MatchToken(TokenKind kind);
 	bool EatToken(TokenKind kind);
+
 	Node* ParseExpression();
 	Node* ParsePrimaryExpression();
 	Node* ParseBinaryExpression(uint64_t parentPresedence = 0);
+
+	Node* ParseStatement();
 private:
 	uint64_t GetUnaryOperatorPrecedence(TokenKind kind);
 	uint64_t GetBinaryOperatorPrecedence(TokenKind kind);

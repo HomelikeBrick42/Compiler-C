@@ -2,9 +2,11 @@
 #include "NodeKind.hpp"
 #include "Token.hpp"
 #include "TokenKind.hpp"
+#include "DynamicArray.hpp"
 
 #include <cstdio>
 #include <cstring>
+#include <cassert>
 
 void PrintNode(Node* node, const char* indent, bool isLast) {
 	const char* marker = isLast ? "\xC0\xC4\xC4" : "\xC3\xC4\xC4";
@@ -14,6 +16,25 @@ void PrintNode(Node* node, const char* indent, bool isLast) {
     printf("%s", NodeKindToString(node->Kind));
     Token* token = nullptr;
     switch (node->Kind) {
+    case NodeKind::Identifier:
+        printf(" %s", static_cast<IdentifierToken*>(static_cast<IdentifierNode*>(node)->Identifier)->Name);
+        break;
+    case NodeKind::ConstantDefinition:
+        if (static_cast<ConstantDefinitionNode*>(node)->Type) {
+            assert(false);
+        }
+        printf(" %s", static_cast<IdentifierToken*>(static_cast<ConstantDefinitionNode*>(node)->Identifier)->Name);
+        break;
+    case NodeKind::Definition:
+        if (static_cast<DefinitionNode*>(node)->Type) {
+            assert(false);
+        }
+        printf(" %s", static_cast<IdentifierToken*>(static_cast<DefinitionNode*>(node)->Identifier)->Name);
+        break;
+    case NodeKind::Assignment:
+        printf(" %s", static_cast<IdentifierToken*>(static_cast<AssignmentNode*>(node)->Identifier)->Name);
+        token = static_cast<AssignmentNode*>(node)->Operator;
+        break;
     case NodeKind::UnaryOperator:
         token = static_cast<UnaryOperatorNode*>(node)->Operator;
         break;
@@ -83,6 +104,36 @@ void PrintNode(Node* node, const char* indent, bool isLast) {
         case TokenKind::PipePipe:
             printf("||");
             break;
+        case TokenKind::PlusEquals:
+            printf("+=");
+            break;
+        case TokenKind::MinusEquals:
+            printf("-=");
+            break;
+        case TokenKind::AsteriskEquals:
+            printf("*=");
+            break;
+        case TokenKind::ForwardSlashEquals:
+            printf("/=");
+            break;
+        case TokenKind::PercentEquals:
+            printf("%=");
+            break;
+        case TokenKind::LessThanLessThanEquals:
+            printf("<<=");
+            break;
+        case TokenKind::GreaterThanGreaterThanEquals:
+            printf(">>=");
+            break;
+        case TokenKind::AmpersandEquals:
+            printf("&=");
+            break;
+        case TokenKind::PipeEquals:
+            printf("|=");
+            break;
+        case TokenKind::CaretEquals:
+            printf("^=");
+            break;
         }
     }
 
@@ -104,12 +155,23 @@ void PrintNode(Node* node, const char* indent, bool isLast) {
     strcat(newIndent, isLast ? "   " : "\xB3  ");
 
     switch (node->Kind) {
+    case NodeKind::Root:
+        for (uint64_t i = 0; i < DynamicArrayGetLength(static_cast<RootNode*>(node)->Children); i++) {
+            PrintNode(static_cast<RootNode*>(node)->Children[i], newIndent, i == (DynamicArrayGetLength(static_cast<RootNode*>(node)->Children) - 1));
+        }
+        break;
     case NodeKind::UnaryOperator:
         PrintNode(static_cast<UnaryOperatorNode*>(node)->Operand, newIndent, true);
         break;
     case NodeKind::BinaryOperator:
         PrintNode(static_cast<BinaryOperatorNode*>(node)->Left, newIndent, false);
         PrintNode(static_cast<BinaryOperatorNode*>(node)->Right, newIndent, true);
+        break;
+    case NodeKind::ConstantDefinition:
+        PrintNode(static_cast<ConstantDefinitionNode*>(node)->Value, newIndent, true);
+        break;
+    case NodeKind::Assignment:
+        PrintNode(static_cast<AssignmentNode*>(node)->Value, newIndent, true);
         break;
     case NodeKind::Int:
     case NodeKind::Float:

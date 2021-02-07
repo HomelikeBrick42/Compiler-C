@@ -69,8 +69,12 @@ Parser::~Parser() {
 }
 
 Node* Parser::Parse() {
-	Node* root = ParseExpression();
-	assert(EatToken(TokenKind::Semicolon));
+	RootNode* root = new RootNode{ NodeKind::Root, DynamicArrayCreate(Node*) };
+	while (m_Current->Kind != TokenKind::EndOfFile) {
+		Node* node = ParseStatement();
+		DynamicArrayPush(root->Children, node);
+	}
+	assert(EatToken(TokenKind::EndOfFile));
 	return root;
 }
 
@@ -121,6 +125,10 @@ Node* Parser::ParsePrimaryExpression() {
 		Token* token = NextToken();
 		return new FloatNode{ NodeKind::Float, static_cast<FloatToken*>(token)->Value };
 	}
+	case TokenKind::Identifier: {
+		Token* token = NextToken();
+		return new IdentifierNode{ NodeKind::Identifier, token };
+	}
 	case TokenKind::OpenParentheses: {
 		assert(EatToken(TokenKind::OpenParentheses));
 		Node* expression = ParseBinaryExpression();
@@ -155,6 +163,19 @@ Node* Parser::ParseBinaryExpression(uint64_t parentPresedence) {
 	}
 
 	return left;
+}
+
+Node* Parser::ParseStatement() {
+	assert(m_Current->Kind == TokenKind::Identifier);
+	Token* name = NextToken();
+	if (EatToken(TokenKind::ColonColon)) {
+		Node* value = ParseExpression();
+		assert(EatToken(TokenKind::Semicolon));
+		return new ConstantDefinitionNode{ NodeKind::ConstantDefinition, name, nullptr, value };
+	}
+
+	assert(false);
+	return nullptr;
 }
 
 uint64_t Parser::GetUnaryOperatorPrecedence(TokenKind kind) {
