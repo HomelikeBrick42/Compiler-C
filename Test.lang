@@ -6,6 +6,7 @@ _var123 :: 1 + 2 * 3;
 	*/
 */
 
+/*
 factorial :: (int n) -> int {
 	if (n > 1) {
 		return factorial(n - 1) * n;
@@ -24,3 +25,4 @@ main :: () /* -> void */ {
 
 	num := factorial(5); // Calculate factorial of 5
 }
+*/

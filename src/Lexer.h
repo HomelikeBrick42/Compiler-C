@@ -21,5 +21,7 @@ char LexerNext(Lexer* lexer);
 
 Token* LexerWhitespace(Lexer* lexer);
 Token* LexerIdentifier(Lexer* lexer);
+Token* LexerSingleLineComment(Lexer* lexer);
+Token* LexerMultilineComment(Lexer* lexer);
 Token* LexerInt(Lexer* lexer);
 Token* LexerFloat(Lexer* lexer);

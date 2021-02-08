@@ -8,6 +8,7 @@ typedef struct Token {
 	TokenKind Kind;
 	u64 Line;
 	u64 CharLinePosition;
+	u64 Length;
 	const char* Source;
 	union {
 		const char* Name;
@@ -16,9 +17,9 @@ typedef struct Token {
 	};
 } Token;
 
-Token* CreateToken(TokenKind kind, u64 line, u64 charLinePosition, const char* source);
-Token* CreateIdentifierToken(const char* name, u64 line, u64 charLinePosition, const char* source);
-Token* CreateIntToken(u64 value, u64 line, u64 charLinePosition, const char* source);
-Token* CreateFloatToken(double value, u64 line, u64 charLinePosition, const char* source);
+Token* CreateToken(TokenKind kind, u64 length, u64 line, u64 charLinePosition, const char* source);
+Token* CreateIdentifierToken(const char* name, u64 length, u64 line, u64 charLinePosition, const char* source);
+Token* CreateIntToken(u64 value, u64 length, u64 line, u64 charLinePosition, const char* source);
+Token* CreateFloatToken(double value, u64 length, u64 line, u64 charLinePosition, const char* source);
 
 void PrintToken(Token* token);
