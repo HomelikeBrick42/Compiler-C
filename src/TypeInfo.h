@@ -3,13 +3,15 @@
 #include "Typedefs.h"
 
 typedef enum TypeInfoKind {
-	VOID,
-	POINTER,
-	INTEGER,
-	FLOAT,
-	PROCEDURE,
-	STRUCT,
-	ENUM,
+	TYPE_INFO_VOID,
+	TYPE_INFO_POINTER,
+	TYPE_INFO_INTEGER,
+	TYPE_INFO_FLOAT,
+	TYPE_INFO_ARRAY,
+	TYPE_INFO_STRING,
+	TYPE_INFO_PROCEDURE,
+	TYPE_INFO_STRUCT,
+	TYPE_INFO_ENUM,
 } TypeInfoKind;
 
 DECLARE_STRUCT(TypeInfo);
@@ -17,6 +19,10 @@ typedef struct TypeInfo {
 	TypeInfoKind Kind;
 	const char* TypeName;
 	union {
+		struct {
+			TypeInfo* ToType;
+		} Pointer;
+
 		struct {
 			u64 Size;
 			bool Signed;
@@ -27,8 +33,8 @@ typedef struct TypeInfo {
 		} Float;
 
 		struct {
-			TypeInfo* PointerTo;
-		} Pointer;
+			TypeInfo* OfType;
+		} Array;
 
 		struct {
 			struct {
