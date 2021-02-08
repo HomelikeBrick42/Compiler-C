@@ -5,6 +5,7 @@
 #include "TypeInfo.h"
 #include "File.h"
 #include "StringIntern.h"
+#include "DynamicArray.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,20 +24,35 @@ int main(int argc, char** argv) {
 		return 2;
 	}
 
-	Lexer* lexer = CreateLexer(source);
-	bool end = false;
-	while (!end) {
-		Token* token = LexerNextToken(lexer);
-		if (token->Kind == TOKEN_KIND_END_OF_FILE) {
-			end = true;
+	Token** tokens = DynamicArrayCreate(Token*);
+	{
+		Lexer* lexer = CreateLexer(source);
+
+		bool end = false;
+		while (!end) {
+			Token* token = LexerNextToken(lexer);
+			if (token->Kind == TOKEN_KIND_END_OF_FILE) {
+				end = true;
+			}
+
+			DynamicArrayPush(tokens, token);
 		}
 
-		PrintToken(token);
-		free(token);
+		free(lexer);
 	}
 
-	free(lexer);
-	free(source);
+	ForArray(tokens) {
+		PrintToken(tokens[i]);
+	}
+
+	{
+		ForArray(tokens) {
+			free(tokens[i]);
+		}
+		DynamicArrayDestroy(tokens);
+
+		free(source);
+	}
 
 	return 0;
 }

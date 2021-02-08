@@ -2,6 +2,9 @@
 
 #include "Typedefs.h"
 
+#define ForArray(array) \
+	for (u64 i = 0; i < DynamicArrayGetLength(array); i++)
+
 typedef enum DynamicArrayField
 {
 	DYNAMIC_ARRAY_CAPACITY,
