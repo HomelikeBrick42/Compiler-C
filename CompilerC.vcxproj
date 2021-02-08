@@ -87,6 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Alloc.c" />
+    <ClCompile Include="src\DynamicArray.c" />
     <ClCompile Include="src\File.c" />
     <ClCompile Include="src\Lexer.c" />
     <ClCompile Include="src\Main.c" />
@@ -96,12 +97,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alloc.h" />
+    <ClInclude Include="src\DynamicArray.h" />
     <ClInclude Include="src\File.h" />
     <ClInclude Include="src\Lexer.h" />
     <ClInclude Include="src\StringIntern.h" />
     <ClInclude Include="src\Token.h" />
     <ClInclude Include="src\TokenKind.h" />
     <ClInclude Include="src\Typedefs.h" />
+    <ClInclude Include="src\TypeInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Test.lang" />

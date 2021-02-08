@@ -3,6 +3,7 @@
 #include "Token.h"
 #include "Alloc.h"
 #include "StringIntern.h"
+#include "DynamicArray.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -358,7 +359,7 @@ Token* LexerInt(Lexer* lexer) {
 Token* LexerFloat(Lexer* lexer) {
 	u64 length = 0;
 
-	char* string = xcalloc(1, sizeof(char));
+	char* string = DynamicArrayCreate(char);
 
 	while (true) {
 		switch (lexer->Current) {
@@ -368,9 +369,7 @@ Token* LexerFloat(Lexer* lexer) {
 		case '0': case '1': case '2': case '3': case '4':
 		case '5': case '6': case '7': case '8': case '9':
 		case '.': {
-			string = xrealloc(string, (length + 2) * sizeof(char));
-			string[length + 0] = lexer->Current;
-			string[length + 1] = '\0';
+			DynamicArrayPush(string, lexer->Current);
 			length++;
 			LexerNext(lexer);
 			continue;
@@ -381,9 +380,12 @@ Token* LexerFloat(Lexer* lexer) {
 		break;
 	}
 
+	DynamicArrayPushLiteral(string, '\0', char);
+
 	char* end;
 	double value = strtod(string, &end);
-	free(string);
+
+	DynamicArrayDestroy(string);
 
 	return CreateFloatToken(value, length, lexer->Line, lexer->CharLinePosition, lexer->Source);
 }

@@ -21,6 +21,7 @@ main :: () /* -> void */ {
 	c := a + b;
 	d: float;
 	d = 5.0;
+	e: float = a + c;
 	a *= 10.0;
 
 	num := factorial(5); // Calculate factorial of 5

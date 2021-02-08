@@ -2,6 +2,7 @@
 #include "TokenKind.h"
 #include "Token.h"
 #include "Lexer.h"
+#include "TypeInfo.h"
 #include "File.h"
 #include "StringIntern.h"
 
